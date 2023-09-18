@@ -1,0 +1,112 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+       body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url('hbg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.glass-container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    max-width: 80%;
+    text-align: center;
+}
+
+.title {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.image-grid a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.image-grid img {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-grid img:hover {
+    transform: scale(1.05);
+}
+/* ... Previous CSS styles ... */
+
+.image-item {
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-item img {
+    width: 100%;
+    max-width:220px; /* Set the maximum width for consistency */
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-title {
+    margin: 10px 0;
+    font-size: 22px;
+}
+
+/* ... Previous CSS styles ... */
+
+ 
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neuro Fusion</title>
+    
+</head>
+<body>
+    <div class="glass-container">
+        <h1 class="title">Neuro Fusion Work Flow</h1>
+        <div class="image-grid">
+            <a href="https://drive.google.com/drive/folders/1iGaBV7ew3xpSoWShw86wIq_5kO9gSnz0" class="image-item">
+                <img src="storage.gif" alt="Image 1">
+                <h2 class="image-title">Google Drive</h2>
+            </a>
+            <a href="https://github.com/codecravings/NeuroFusion" class="image-item">
+                <img src="github.gif" alt="Image 2">
+                <h2 class="image-title">Git Hub</h2>
+            </a>
+            <a href="Index0.html" class="image-item">
+                <img src="todop1.gif" alt="Image 3">
+                <h2 class="image-title">TO-do phase 1</h2>
+            </a>
+            <a href="Index0.html" class="image-item">
+                <img src="todop1.gif" alt="Image 4">
+                <h2 class="image-title">To-do phase 2</h2>
+            </a>
+            
+        </div>
+    </div>
+</body>
+</html>
