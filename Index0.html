@@ -80,293 +80,157 @@
 
     /* Add your existing CSS styles here */
 
-/* Responsive styles for smaller screens */
-@media (max-width: 768px) {
-  .app-container {
-    max-width: 100%; /* Expand to full width on smaller screens */
-  }
+    /* Responsive styles for smaller screens */
+    @media (max-width: 768px) {
+      .app-container {
+        max-width: 100%; /* Expand to full width on smaller screens */
+      }
 
-  .todo-form {
-    flex-direction: column; /* Stack input and button vertically */
-  }
+      .todo-form {
+        flex-direction: column; /* Stack input and button vertically */
+      }
 
-  /* Adjust padding and font size for smaller screens */
-  #todo-input {
-    padding: 8px;
-    font-size: 14px;
-  }
+      /* Adjust padding and font size for smaller screens */
+      #todo-input {
+        padding: 8px;
+        font-size: 14px;
+      }
 
-  #add-button {
-    padding: 8px 12px;
-    font-size: 14px;
-  }
+      #add-button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
 
-  /* Ensure the list items are displayed properly */
-  .todo-item {
-    flex-direction: column; /* Stack items vertically */
-    align-items: flex-start;
-  }
+      /* Ensure the list items are displayed properly */
+      .todo-item {
+        flex-direction: column; /* Stack items vertically */
+        align-items: flex-start;
+      }
 
-  .task-text {
-    margin-top: 10px; /* Add spacing between text and buttons */
-  }
+      .task-text {
+        margin-top: 10px; /* Add spacing between text and buttons */
+      }
 
-  /* Adjust the buttons' sizes and spacing */
-  .edit-button,
-  .delete-button {
-    margin-top: 5px;
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-}
-
+      /* Adjust the buttons' sizes and spacing */
+      .edit-button,
+      .delete-button {
+        margin-top: 5px;
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+    }
   </style>
 </head>
 <body>
-    <div class="app-container">
-        <h1>To-Do List</h1>
-        <div class="todo-form">
-          <input type="text" id="todo-input" placeholder="Add a new task">
-          <button id="add-button">Add</button>
-        </div>
-        <div id="todo-list" class="todo-list">
-          <!-- To-do items will be dynamically added here -->
-          <div class="todo-item">
-            <input type="checkbox">
-            <span class="task-text">Task 1</span>
-            <button class="edit-button">Edit</button>
-            <button class="delete-button">Delete</button>
-          </div>
-          <div class="todo-item">
-            <input type="checkbox">
-            <span class="task-text">Task 2</span>
-            <button class="edit-button">Edit</button>
-            <button class="delete-button">Delete</button>
-            <div class="todo-item">
-              <input type="checkbox">
-              <span class="task-text">Task 3</span>
-              <button class="edit-button">Edit</button>
-              <button class="delete-button">Delete</button>
-            </div>
-            <div class="todo-item">
-              <input type="checkbox">
-              <span class="task-text">Task 4</span>
-              <button class="edit-button">Edit</button>
-              <button class="delete-button">Delete</button>
-            </div>
-            <div class="todo-item">
-              <input type="checkbox">
-              <span class="task-text">Task 5</span>
-              <button class="edit-button">Edit</button>
-              <button class="delete-button">Delete</button>
-            </div>
-            <div class="todo-item">
-              <input type="checkbox">
-              <span class="task-text">Task 6</span>
-              <button class="edit-button">Edit</button>
-              <button class="delete-button">Delete</button>
-            </div>
-            <div class="todo-item">
-              <input type="checkbox">
-              <span class="task-text">Task 7</span>
-              <button class="edit-button">Edit</button>
-              <button class="delete-button">Delete</button>
-            </div>
-          </div>
-        </div>
-      </div>
+  <div class="app-container">
+    <h1>To-Do List</h1>
+    <div class="todo-form">
+      <input type="text" id="todo-input" placeholder="Add a new task">
+      <button id="add-button">Add</button>
+    </div>
+    <div id="todo-list" class="todo-list">
+      <!-- To-do items will be dynamically added here -->
+    </div>
+  </div>
   <script>
     // JavaScript code goes here
-    // Sample array to store to-do items
-    // JavaScript code
-let todoItems = [
-  { id: 1, text: 'Collect all the necessary resources like background gif and sounds for menu', completed: false },
-  { id: 2, text: 'Create a responsive menu bar include 1)cool animated background(gif) and music, add 3 buttons (Inteligent Quote,Emotional Intelligence,Reflexes), a title above them namly Neurofusion ', completed: false },
-  { id: 3, text: 'Each botton will contain image aside of there name namely,Onclicking each button or on hover will generate a sound and new page will open', completed: false },
-  { id: 4, text: 'Start working on our NeuroFusion Game...', completed: false },
-  { id: 5, text: 'Collect all the necessary resources like background gif and sounds', completed: false },
-  { id: 6, text: 'Structure of game must be fully responsive with phone and has cool sounds and animated gif and top-left-corner will contain display board which will Reflexes improvement(), below will  and increment & decrement button...', completed: false },
-  { id: 7, text: 'Create an arry of 7-8 images which will pop-up one-by-one and disappear in relation with timing(if increment happen must disapear soon vise-versa) onclick will also generate sound effect and timing will be calculated inrelation with time,then score calculated and displed', completed: false },
-];
+    // Sample array to store to-do items, now with localStorage support
+    let todoItems = JSON.parse(localStorage.getItem('todoItems')) || [];
 
-const todoList = document.getElementById('todo-list');
-const todoInput = document.getElementById('todo-input');
-const addButton = document.getElementById('add-button');
-// ...
+    const todoList = document.getElementById('todo-list');
+    const todoInput = document.getElementById('todo-input');
+    const addButton = document.getElementById('add-button');
+    let editingTask = null; // Initialize editingTask as null
 
-function renderTodoItems() {
-  // Clear the existing list
-  todoList.innerHTML = '';
+    function renderTodoItems() {
+      // Clear the existing list
+      todoList.innerHTML = '';
 
-  // Loop through the to-do items and create HTML elements for each
-  for (const item of todoItems) {
-    const listItem = document.createElement('div');
-    listItem.classList.add('todo-item');
+      // Loop through the to-do items and create HTML elements for each
+      for (const item of todoItems) {
+        const listItem = document.createElement('div');
+        listItem.classList.add('todo-item');
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.completed;
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = item.completed;
 
-    const text = document.createElement('span');
-    text.textContent = item.text;
-    
-    // Check if the task is completed and apply strikethrough style if true
-    if (item.completed) {
-      text.style.textDecoration = 'line-through';
+        const text = document.createElement('span');
+        text.textContent = item.text;
+
+        // Check if the task is completed and apply strikethrough style if true
+        if (item.completed) {
+          text.style.textDecoration = 'line-through';
+        }
+
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+
+        // Attach event listeners to the checkbox, edit button, and delete button
+        checkbox.addEventListener('change', () => {
+          item.completed = checkbox.checked;
+          saveTodoItems(); // Save the progress
+          renderTodoItems(); // Update the UI
+        });
+
+        editButton.addEventListener('click', () => {
+          // Set editingTask to the current item being edited
+          editingTask = item;
+          const newText = prompt('Edit task:', item.text);
+          if (newText !== null) {
+            item.text = newText;
+            saveTodoItems(); // Save the progress
+            renderTodoItems(); // Update the UI
+          }
+        });
+
+        deleteButton.addEventListener('click', () => {
+          const index = todoItems.indexOf(item);
+          if (index !== -1) {
+            todoItems.splice(index, 1);
+            saveTodoItems(); // Save the progress
+            renderTodoItems(); // Update the UI
+          }
+        });
+
+        listItem.appendChild(checkbox);
+        listItem.appendChild(text);
+        listItem.appendChild(editButton);
+        listItem.appendChild(deleteButton);
+
+        todoList.appendChild(listItem);
+      }
     }
 
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-
-    // Attach event listeners to the checkbox, edit button, and delete button
-    checkbox.addEventListener('change', () => {
-      item.completed = checkbox.checked;
-      renderTodoItems(); // Update the UI
-    });
-
-    editButton.addEventListener('click', () => {
-      const newText = prompt('Edit task:', item.text);
-      if (newText !== null) {
-        item.text = newText;
+    // Function to add a new task
+    function addTask() {
+      const taskText = todoInput.value.trim(); // Trim removes leading/trailing spaces
+      if (taskText !== '') {
+        const newTask = {
+          id: todoItems.length + 1,
+          text: taskText,
+          completed: false,
+        };
+        todoItems.push(newTask);
+        todoInput.value = ''; // Clear the input field
+        saveTodoItems(); // Save the progress
         renderTodoItems(); // Update the UI
       }
-    });
-
-    deleteButton.addEventListener('click', () => {
-      const index = todoItems.indexOf(item);
-      if (index !== -1) {
-        todoItems.splice(index, 1);
-        renderTodoItems(); // Update the UI
-      }
-    });
-
-    listItem.appendChild(checkbox);
-    listItem.appendChild(text);
-    listItem.appendChild(editButton);
-    listItem.appendChild(deleteButton);
-
-    todoList.appendChild(listItem);
-  }
-}
-
-// ...
-
-
-function renderTodoItems() {
-  // Clear the existing list
-  todoList.innerHTML = '';
-
-  // Loop through the to-do items and create HTML elements for each
-  for (const item of todoItems) {
-    const listItem = document.createElement('div');
-    listItem.classList.add('todo-item');
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.completed;
-
-    const text = document.createElement('span');
-    text.textContent = item.text;
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-
-    // Attach event listeners to the checkbox and delete button
-    checkbox.addEventListener('change', () => {
-      item.completed = checkbox.checked;
-      renderTodoItems(); // Update the UI
-    });
-
-    deleteButton.addEventListener('click', () => {
-      const index = todoItems.indexOf(item);
-      if (index !== -1) {
-        todoItems.splice(index, 1);
-        renderTodoItems(); // Update the UI
-      }
-    });
-
-    listItem.appendChild(checkbox);
-    listItem.appendChild(text);
-    listItem.appendChild(deleteButton);
-
-    todoList.appendChild(listItem);
-  }
-}
-
-// Function to add a new task
-function addTask() {
-  const taskText = todoInput.value.trim(); // Trim removes leading/trailing spaces
-  if (taskText !== '') {
-    const newTask = {
-      id: todoItems.length + 1,
-      text: taskText,
-      completed: false,
-    };
-    todoItems.push(newTask);
-    todoInput.value = ''; // Clear the input field
-    renderTodoItems(); // Update the UI
-  }
-}
-
-// Attach the addTask function to the "Add" button's click event
-addButton.addEventListener('click', addTask);
-
-// Initial rendering of to-do items
-renderTodoItems();
-
-// ...
-
-function renderTodoItems() {
-  // Clear the existing list
-  todoList.innerHTML = '';
-
-  // Loop through the to-do items and create HTML elements for each
-  for (const item of todoItems) {
-    const listItem = document.createElement('div');
-    listItem.classList.add('todo-item');
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.completed;
-
-    const text = document.createElement('span');
-    text.textContent = item.text;
-
-    // Check if the task is completed and apply strikethrough style if true
-    if (item.completed) {
-      text.style.textDecoration = 'line-through';
     }
 
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
+    // Function to save to-do items to localStorage
+    function saveTodoItems() {
+      localStorage.setItem('todoItems', JSON.stringify(todoItems));
+    }
 
-    // Attach event listeners to the checkbox and delete button
-    checkbox.addEventListener('change', () => {
-      item.completed = checkbox.checked;
-      renderTodoItems(); // Update the UI
-    });
+    // Attach the addTask function to the "Add" button's click event
+    addButton.addEventListener('click', addTask);
 
-    deleteButton.addEventListener('click', () => {
-      const index = todoItems.indexOf(item);
-      if (index !== -1) {
-        todoItems.splice(index, 1);
-        renderTodoItems(); // Update the UI
-      }
-    });
-
-    listItem.appendChild(checkbox);
-    listItem.appendChild(text);
-    listItem.appendChild(deleteButton);
-
-    todoList.appendChild(listItem);
-  }
-}
-
-// ...
-
+    // Initial rendering of to-do items
+    renderTodoItems();
 
   </script>
 </body>
