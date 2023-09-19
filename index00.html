@@ -174,7 +174,7 @@ function renderTodoItems() {
 
     const text = document.createElement('span');
     text.textContent = item.text;
-    
+
     // Check if the task is completed and apply strikethrough style if true
     if (item.completed) {
       text.style.textDecoration = 'line-through';
@@ -210,7 +210,7 @@ function renderTodoItems() {
 
     listItem.appendChild(checkbox);
     listItem.appendChild(text);
-    listItem.appendChild(editButton);
+    listItem.appendChild(editButton); // Add the Edit button
     listItem.appendChild(deleteButton);
 
     todoList.appendChild(listItem);
@@ -218,48 +218,6 @@ function renderTodoItems() {
 }
 
 // ...
-
-
-function renderTodoItems() {
-  // Clear the existing list
-  todoList.innerHTML = '';
-
-  // Loop through the to-do items and create HTML elements for each
-  for (const item of todoItems) {
-    const listItem = document.createElement('div');
-    listItem.classList.add('todo-item');
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.completed;
-
-    const text = document.createElement('span');
-    text.textContent = item.text;
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-
-    // Attach event listeners to the checkbox and delete button
-    checkbox.addEventListener('change', () => {
-      item.completed = checkbox.checked;
-      renderTodoItems(); // Update the UI
-    });
-
-    deleteButton.addEventListener('click', () => {
-      const index = todoItems.indexOf(item);
-      if (index !== -1) {
-        todoItems.splice(index, 1);
-        renderTodoItems(); // Update the UI
-      }
-    });
-
-    listItem.appendChild(checkbox);
-    listItem.appendChild(text);
-    listItem.appendChild(deleteButton);
-
-    todoList.appendChild(listItem);
-  }
-}
 
 // Function to add a new task
 function addTask() {
@@ -281,54 +239,6 @@ addButton.addEventListener('click', addTask);
 
 // Initial rendering of to-do items
 renderTodoItems();
-
-// ...
-
-function renderTodoItems() {
-  // Clear the existing list
-  todoList.innerHTML = '';
-
-  // Loop through the to-do items and create HTML elements for each
-  for (const item of todoItems) {
-    const listItem = document.createElement('div');
-    listItem.classList.add('todo-item');
-
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = item.completed;
-
-    const text = document.createElement('span');
-    text.textContent = item.text;
-
-    // Check if the task is completed and apply strikethrough style if true
-    if (item.completed) {
-      text.style.textDecoration = 'line-through';
-    }
-
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-
-    // Attach event listeners to the checkbox and delete button
-    checkbox.addEventListener('change', () => {
-      item.completed = checkbox.checked;
-      renderTodoItems(); // Update the UI
-    });
-
-    deleteButton.addEventListener('click', () => {
-      const index = todoItems.indexOf(item);
-      if (index !== -1) {
-        todoItems.splice(index, 1);
-        renderTodoItems(); // Update the UI
-      }
-    });
-
-    listItem.appendChild(checkbox);
-    listItem.appendChild(text);
-    listItem.appendChild(deleteButton);
-
-    todoList.appendChild(listItem);
-  }
-}
 
 // ...
 
